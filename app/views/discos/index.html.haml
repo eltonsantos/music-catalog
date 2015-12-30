@@ -1,0 +1,75 @@
+%p#notice= notice
+
+- if user_signed_in?
+  .col-md-3
+    %p.lead Loja de discos
+    .list-group
+      = link_to categorias_path, class: "list-group-item" do
+        %i.fa.fa-plus
+        Cadastrar categoria
+      = link_to discos_path, class: "list-group-item" do
+        %i.fa.fa-music
+        Cadastrar discos
+      = link_to '#', class: "list-group-item" do
+        %i.fa.fa-question-circle
+        Sobre
+
+  .col-md-9
+    .row
+      %h2 Administração 
+
+      %table.table
+        %thead
+          %tr
+            %th Categoria
+            %th Nome
+            %th Imagem
+            %th Preço
+            %th Ano
+            %th Estado de conservação
+
+            %th Local
+            %th{:colspan => "3"}
+        %tbody
+          - @discos.each do |disco|
+            %tr
+              %td= disco.categoria.name
+              %td= disco.name
+              %td= image_tag disco.image.url(:thumb)
+              %td= disco.price
+              %td= disco.year
+              %td= disco.state
+              %td= disco.local
+              %td
+                = link_to disco, {title: 'Visualizar', class: "tooltip-js", "data-toggle" => "tooltip", "data-placement" => "top" } do
+                  %i.fa.fa-search
+              %td
+                = link_to edit_disco_path(disco), {title: "Editar", class: "tooltip-js", "data-toggle" => "tooltip", "data-placement" => "top" } do
+                  %i.fa.fa-edit
+              %td
+                = link_to disco, method: :delete, data: { confirm: 'Are you sure?' }, title:"Remover", class: "tooltip-js", "data-toggle" => "tooltip", "data-placement" => "top" do
+                  %i.fa.fa-remove
+      %br/
+
+      = link_to 'New Disco', new_disco_path
+
+- else
+  .col-md-12
+    .row
+      - @discos.each do |disco|
+        .col-md-3
+          %a{:href => "#"}
+            %img.img-responsive
+              = image_tag disco.image.url(:thumb)
+          %h3
+            = disco.name
+          %p
+            = disco.price
+          %p
+            = disco.year
+          %p
+            = disco.state
+          %p
+            = disco.local
+          %p
+            = link_to "Detalhes", disco

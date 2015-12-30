@@ -1,0 +1,52 @@
+%p#notice= notice
+
+.col-md-3
+  %p.lead Loja de discos
+  .list-group
+    = link_to categorias_path, class: "list-group-item" do
+      %i.fa.fa-plus
+      Cadastrar categoria
+    = link_to discos_path, class: "list-group-item" do
+      %i.fa.fa-music
+      Cadastrar discos
+    = link_to '#', class: "list-group-item" do
+      %i.fa.fa-question-circle
+      Sobre
+
+.col-md-9
+  .row
+    %h3 Categorias cadastradas
+    %ul
+      - @categorias.each do |categoria|
+        %li
+          = categoria.name
+
+
+  - if user_signed_in?
+    .row
+      %h2 Administração
+      %table.table
+        %thead
+          %tr
+            %th Name
+            %th
+            %th
+            %th
+
+        %tbody
+          - @categorias.each do |categoria|
+            %tr
+              %td= categoria.name
+              %td
+                = link_to categoria, {title: 'Visualizar', class: "tooltip-js", "data-toggle" => "tooltip", "data-placement" => "top" } do
+                  %i.fa.fa-search
+              %td
+                = link_to edit_categoria_path(categoria), {title: "Editar", class: "tooltip-js", "data-toggle" => "tooltip", "data-placement" => "top" } do
+                  %i.fa.fa-edit
+              %td
+                = link_to categoria, method: :delete, data: { confirm: 'Are you sure?' }, title:"Remover", class: "tooltip-js", "data-toggle" => "tooltip", "data-placement" => "top" do
+                  %i.fa.fa-remove
+
+      %br
+
+      = link_to 'New Categoria', new_categoria_path
