@@ -3,8 +3,9 @@ Rails.application.routes.draw do
   
   resources :discos do
     member do
-      get 'interesse' => 'discos#interesse'
-      post 'enviarmail' => 'discos#enviarmail'
+      get 'interesse' => 'discos#interesse' # rota do modal
+      get 'enviarmail' => 'discos#enviarmail' # rota para envio do email
+      post 'enviarmail' => 'discos#enviarmail' # rota para envio do email
     end
   end
 

@@ -31,7 +31,7 @@
       = @disco.description
     %p
       %strong Preço:
-      = @disco.price
+      = number_to_currency_br(@disco.price)
     %p
       %strong Ano:
       = @disco.year
@@ -46,39 +46,44 @@
     = link_to 'Back', discos_path
 
 - else
-
-
-  .col-md-12     
-    %p
-      %strong Categoria:
-      = @disco.categoria.name
-    %p
-      %strong Nome:
-      = @disco.name
-    %p
-      %strong Imagem:
-      = image_tag @disco.image.url(:medium)
-
-    %p
-      %strong Descrição:
-      = @disco.description
-    %p
-      %strong Preço:
-      = @disco.price
-    %p
-      %strong Ano:
-      = @disco.year
-    %p
-      %strong Estado de conservação:
-      = @disco.state
-    %p
-      %strong Local:
-
-      = @disco.local
-
-    = link_to interesse_disco_path, {class: 'btn btn-warning', 'data-toggle' => 'modal', 'data-target' => '#modal-show', :remote => true} do
-      %i.fa.fa-heart-o 
-      Estou interessado!
+  .row
+    .col-md-12
+      .col-md-7
+        .row
+          = image_tag @disco.image.url(:large)
+        .row
+          = link_to interesse_disco_path, {class: 'btn btn-warning pull-right btn-interessado btn-lg', 'data-toggle' => 'modal', 'data-target' => '#modal-show', :remote => true} do
+            %i.fa.fa-heart-o 
+            Estou interessado!  
+      .col-md-5
+        .row  
+          %p
+            %strong Categoria:
+            = @disco.categoria.name
+          %p
+            %strong Nome:
+            = @disco.name
+          %p
+            %strong Descrição:
+            = @disco.description
+          %p
+            %strong Preço:
+            = number_to_currency_br(@disco.price)
+          %p
+            %strong Ano:
+            = @disco.year
+          %p
+            %strong Estado de conservação:
+            = @disco.state
+          %p
+            %strong Local:
+            = @disco.local
+        .row
+          // Aqui ficará o mapa
+          .row
+            %div{style:'width: 100%;'}
+              #gmap{style:'width: 100%; height: 240px;'}  
+          %hr
 
 #modal-interesse.modal.fade{:role => "dialog", :tabindex => "-1"}
   .modal-dialog
@@ -88,5 +93,36 @@
           %span{"aria-hidden" => "true"} &times;
         %h4.modal-title Tenho interesse no disco: #{@disco.name}
       .modal-body
-      .modal-footer
-        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+
+
+// MAPLACE  COORD(LAT, LON) - FORT -3.7301514, -38.5212008 | BRAS -15.7901514, -47.8812008
+:javascript
+
+  var brasilia = [
+    {
+      lat: -15.7901514,
+      lon: -47.8812008,
+      title: 'Brasília',
+      zoom: 13,
+      icon: 'http://maps.google.com/mapfiles/markerB.png',
+      animation: google.maps.Animation.DROP
+    }
+  ];
+
+  var fortaleza = [
+    {
+      lat: -3.7301514,
+      lon: -38.5212008,
+      title: 'Fortaleza',
+      zoom: 13,
+      icon: 'http://maps.google.com/mapfiles/markerA.png',
+      animation: google.maps.Animation.DROP
+    }
+  ];
+
+  var maplace = new Maplace({
+    locations: #{(@disco.local == 'Fortaleza' ? 'fortaleza' : 'brasilia')},
+    controls_on_map: false,
+    draggable: false
+  });
+  maplace.Load();

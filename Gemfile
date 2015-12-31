@@ -23,6 +23,7 @@ gem 'devise'
 gem "cancan"
 gem "paperclip", "~> 4.3"
 gem "figaro"
+gem 'devise-i18n'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

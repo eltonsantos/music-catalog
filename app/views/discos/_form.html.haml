@@ -8,6 +8,6 @@
     = f.input :price
     = f.input :year
     = f.input :state, collection: ['Novo', 'Semi novo'], prompt: "Selecione um estado"
-    = f.input :local
+    = f.input :local, collection: ['Fortaleza', 'Brasília'], prompt: "Selecione uma cidade"
   .form-actions
     = f.button :submit

@@ -3,7 +3,7 @@ class CreateDiscos < ActiveRecord::Migration
     create_table :discos do |t|
       t.string :name
       t.text :description
-      t.integer :price
+      t.decimal :price, :precision => 8, :scale => 2
       t.integer :year
       t.string :state
       t.string :local

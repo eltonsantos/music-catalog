@@ -36,7 +36,7 @@
               %td= disco.categoria.name
               %td= disco.name
               %td= image_tag disco.image.url(:thumb)
-              %td= disco.price
+              %td= number_to_currency_br(disco.price)
               %td= disco.year
               %td= disco.state
               %td= disco.local
@@ -57,19 +57,13 @@
   .col-md-12
     .row
       - @discos.each do |disco|
-        .col-md-3
-          %a{:href => "#"}
-            %img.img-responsive
-              = image_tag disco.image.url(:thumb)
-          %h3
-            = disco.name
-          %p
-            = disco.price
-          %p
-            = disco.year
-          %p
-            = disco.state
-          %p
-            = disco.local
-          %p
-            = link_to "Detalhes", disco
+        .col-md-4
+          = link_to disco, class: "fade-info" do
+            .caption
+              %h3
+                = disco.name
+              %p
+                R$ #{disco.price}
+            = image_tag disco.image.url(:medium), class: "disco fade-info"
+
+            

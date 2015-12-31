@@ -12,14 +12,17 @@ class DiscosController < ApplicationController
   def show
   end
 
-  def interesse
-    # Aqui era pra ter alguma coisa, como os dados recebidos pelo formulário
+  def interesse  
   end
 
   def enviarmail
-    EnviarEmail.send_mail(@disco).deliver
+    # Recebendo valores do formulário do modal
+    name = params[:name]
+    email = params[:email]
+    # Método para enviar email responsável por passar os parâmetros nome do disco, nome e email para a view
+    EnviarEmail.send_mail(@disco, name, email).deliver_now
     respond_to do |format|
-      format.html {render :show, notice: "Email enviado com sucesso!"}
+      format.html {render action: 'show', notice: "Email enviado com sucesso!"}
       format.js
     end
   end

@@ -1,4 +1,4 @@
-= simple_form_for(enviarmail_disco_path(@disco), html: { class: 'form-horizontal form-interessado' }) do |f|
+= simple_form_for @disco, url: enviarmail_disco_path(@disco), method: :post, html: { class: 'form-horizontal form-interessado' } do |f|
   = f.error_notification
   .container-fluid
     .form-inputs
@@ -9,6 +9,9 @@
         = label_tag "Email", nil, class: "control-label"
         = text_field_tag :email, nil, class: "string required form-control"
   .form-actions.pull-right
-    = button_tag "Enviar", class: "btn btn-warning"
+    %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+    = button_tag "Enviar", class: "btn btn-warning" do
+      %i.fa.fa-send
+      Enviar
   %br
   %br
